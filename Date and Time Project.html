@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>Date and Time Display</title>
+  <title>Date and Time</title>
+  <!-- Google Fonts for styling -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://img.icons8.com/ios-filled/50/000000/clock.png">
   <style>
+    /* General body styling */
     body {
       font-family: 'Montserrat', Arial, sans-serif;
       background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
@@ -15,56 +19,70 @@
       align-items: center;
       justify-content: center;
     }
+
+    /* Heading styling */
     h1 {
       font-size: 2.8rem;
       color: #333;
       letter-spacing: 2px;
       margin-bottom: 30px;
-      text-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
     }
+
+    /* Container for date and time */
     .datetime {
-      background: rgba(255,255,255,0.85);
+      background: rgba(255, 255, 255, 0.85);
       border-radius: 24px;
-      box-shadow: 0 8px 32px rgba(31,38,135,0.15);
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
       padding: 40px 60px;
       display: inline-block;
       margin-top: 10px;
       min-width: 340px;
       transition: box-shadow 0.3s;
     }
+
     .datetime:hover {
-      box-shadow: 0 12px 40px rgba(31,38,135,0.22);
+      box-shadow: 0 12px 40px rgba(31, 38, 135, 0.22);
     }
-    #date, #time {
+
+    /* Date and time text styling */
+    #date,
+    #time {
       font-size: 1.6rem;
       color: #444;
       margin: 16px 0;
       letter-spacing: 1px;
       transition: color 0.3s;
     }
+
     #time {
       font-size: 2.2rem;
-      color: #e75480;
+      color: hsl(342, 84%, 31%);
       font-weight: 700;
       letter-spacing: 2px;
-      text-shadow: 0 2px 8px rgba(231,84,128,0.08);
+      text-shadow: 0 2px 8px rgba(231, 84, 128, 0.08);
     }
+
+    /* Toggle button styling */
     .toggle-btn {
       margin-top: 24px;
       padding: 10px 24px;
       font-size: 1rem;
       border: none;
       border-radius: 20px;
-      background: #e75480;
+      background: hsl(342, 84%, 31%);
       color: #fff;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 2px 8px rgba(231,84,128,0.08);
+      box-shadow: 0 2px 8px rgba(231, 84, 128, 0.08);
       transition: background 0.2s;
     }
+
     .toggle-btn:hover {
-      background: #c13c66;
+      background: hsl(342, 84%, 31%);
     }
+
+    /* Footer styling */
     .footer {
       margin-top: 40px;
       font-size: 1rem;
@@ -75,30 +93,39 @@
       opacity: 0.85;
       user-select: none;
     }
+
     .footer .heart {
       color: #e75480;
       font-size: 1.1em;
       vertical-align: middle;
       margin: 0 4px;
     }
+
+    /* Responsive design for small screens */
     @media (max-width: 600px) {
       .datetime {
         padding: 24px 10px;
         min-width: 0;
       }
+
       h1 {
         font-size: 2rem;
       }
-      #date, #time {
+
+      #date,
+      #time {
         font-size: 1.1rem;
       }
+
       #time {
         font-size: 1.5rem;
       }
+
       .toggle-btn {
         font-size: 0.9rem;
         padding: 8px 16px;
       }
+
       .footer {
         font-size: 0.9rem;
         margin-top: 24px;
@@ -106,26 +133,32 @@
     }
   </style>
 </head>
+
 <body>
 
   <h1>Current Date and Time</h1>
+  <!-- Container for displaying date and time -->
   <div class="datetime">
     <div id="date"></div>
     <div id="time"></div>
   </div>
+  <!-- Button to toggle between 12-hour and 24-hour format -->
   <button class="toggle-btn" id="toggleFormat">Switch to 24-hour</button>
 
+  <!-- Footer with creator info -->
   <footer class="footer">
     Created by Shubham Patel <span class="heart">&#10084;&#65039;</span>
   </footer>
 
   <script>
+    // Variable to track current time format (false = 12-hour, true = 24-hour)
     let is24Hour = false;
 
+    // Function to update date and time display
     function updateDateTime() {
       const now = new Date();
 
-      // Format Date
+      // Format date as: Weekday, Month Day, Year (e.g., Monday, January 1, 2024)
       const date = now.toLocaleDateString('en-IN', {
         weekday: 'long',
         year: 'numeric',
@@ -133,7 +166,7 @@
         day: 'numeric'
       });
 
-      // Format Time
+      // Format time based on is24Hour flag
       const time = now.toLocaleTimeString('en-IN', {
         hour12: !is24Hour,
         hour: '2-digit',
@@ -141,24 +174,26 @@
         second: '2-digit'
       });
 
-      // Display in HTML
+      // Update HTML elements with current date and time
       document.getElementById("date").textContent = "Date: " + date;
       document.getElementById("time").textContent = "Time: " + time;
     }
 
-    // Toggle button event
-    document.getElementById("toggleFormat").addEventListener("click", function() {
-      is24Hour = !is24Hour;
+    // Event listener for toggle button to switch time format
+    document.getElementById("toggleFormat").addEventListener("click", function () {
+      is24Hour = !is24Hour; // Toggle format
+      // Update button text accordingly
       this.textContent = is24Hour ? "Switch to 12-hour" : "Switch to 24-hour";
-      updateDateTime();
+      updateDateTime(); // Refresh display
     });
 
-    // Call immediately
+    // Initial call to display date and time immediately on page load
     updateDateTime();
 
-    // Update every second
+    // Update date and time every second
     setInterval(updateDateTime, 1000);
   </script>
 
 </body>
+
 </html>
